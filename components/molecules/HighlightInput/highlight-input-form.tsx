@@ -113,6 +113,14 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     }
   };
 
+  const handleCloseHighlight = () => {
+    setIsDivFocused(false);
+    setBodyText("");
+    setTitle("");
+    setCharCount(0);
+    setDate(undefined);
+  };
+
 
   return (
     <form onSubmit={handlePostHighlight} className="flex flex-col flex-1 gap-4">
@@ -186,9 +194,21 @@ https://github.com/open-sauced/insights/pull/913`}
       {pullrequestLink && isDivFocused && <GhOpenGraphImg githubLink={pullrequestLink} />}
 
       {isDivFocused && (
-        <Button loading={loading} disabled={!bodyText || !validCharLimit()} className="ml-auto " variant="primary">
-          Post
-        </Button>
+        <div className="justify-items-end flex flex-row">
+          <Button
+            type="button"
+            className="ml-auto mr-4"
+            showLoadingText={false}
+            disabled={loading}
+            variant="outline"
+            onClick={handleCloseHighlight}
+          >
+            Close
+          </Button>
+          <Button loading={loading} disabled={!bodyText || !validCharLimit()} variant="primary">
+            Post
+          </Button>
+        </div>
       )}
     </form>
   );
